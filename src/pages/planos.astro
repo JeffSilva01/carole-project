@@ -1,0 +1,98 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageHeader from "@/components/PageHeader.astro";
+import CTASection from "@/components/CTASection.astro";
+import Icon from "@/components/Icon.astro";
+import { plans, whatsappLink } from "@/lib/site";
+---
+
+<BaseLayout
+  title="Planos de Saúde"
+  description="Conheça os tipos de planos de saúde: individual, familiar, empresarial e por adesão. Encontre a cobertura ideal para o seu perfil com a Caroli."
+>
+  <PageHeader
+    eyebrow="Nossos planos"
+    title="Um plano para cada momento da sua vida"
+    subtitle="Seja para você, sua família ou sua empresa, encontramos a cobertura que combina com a sua necessidade e o seu bolso."
+    breadcrumbs={[{ label: "Planos" }]}
+  />
+
+  <section class="section">
+    <div class="container-page grid gap-6 md:grid-cols-2">
+      {
+        plans.map((plan) => (
+          <article class="card card-hover flex flex-col" id={plan.slug}>
+            <div class="flex items-center gap-4">
+              <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+                <Icon name={plan.icon} class="h-6 w-6" />
+              </div>
+              <div>
+                <h2 class="text-xl font-bold text-navy-800">{plan.title}</h2>
+                <p class="text-sm font-medium text-brand-600">{plan.tagline}</p>
+              </div>
+            </div>
+
+            <p class="mt-4 text-muted-foreground leading-relaxed">{plan.forWho}</p>
+
+            <ul class="mt-5 space-y-2">
+              {plan.highlights.map((h) => (
+                <li class="flex items-start gap-2 text-sm text-navy-700">
+                  <Icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-brand-500" />
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div class="mt-5 rounded-xl bg-muted p-4">
+              <p class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Cobertura
+              </p>
+              <p class="mt-1 text-sm text-navy-700">{plan.coverage}</p>
+            </div>
+
+            <div class="mt-6 flex flex-col gap-2 sm:flex-row">
+              <a
+                href={whatsappLink(`Olá! Tenho interesse no ${plan.title}. Pode me ajudar?`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-whatsapp flex-1"
+              >
+                <Icon name="message-circle" class="h-4 w-4" />
+                Quero este plano
+              </a>
+              <a href="/solicitar-cotacao" class="btn-secondary flex-1">
+                Simular
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section bg-muted">
+    <div class="container-page max-w-3xl text-center">
+      <span class="eyebrow">Não sabe qual escolher?</span>
+      <h2 class="mt-4 text-2xl font-bold text-navy-800 sm:text-3xl text-balance">
+        A gente te ajuda a decidir sem custo nenhum
+      </h2>
+      <p class="mt-4 text-muted-foreground leading-relaxed">
+        Nossa consultoria é gratuita. Analisamos seu perfil e comparamos as
+        operadoras para indicar o plano com o melhor custo-benefício para você.
+      </p>
+      <div class="mt-8">
+        <a
+          href={whatsappLink()}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary px-8 py-4 text-base"
+        >
+          <Icon name="message-circle" class="h-5 w-5" />
+          Falar com um consultor
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTASection variant="navy" />
+</BaseLayout>

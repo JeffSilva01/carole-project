@@ -1,0 +1,102 @@
+---
+/*
+  Header.astro — menu fixo no topo com logo, navegação e CTA "Solicitar Cotação"
+*/
+import { nav, site } from "@/lib/site"
+import Icon from "@/components/Icon.astro"
+
+const currentPath = Astro.url.pathname
+const isActive = (href: string) => (href === "/" ? currentPath === "/" : currentPath.startsWith(href))
+---
+
+<header class="sticky top-0 z-50 border-b border-border bg-white/90 backdrop-blur-md">
+  <div class="container-page flex h-18 items-center justify-between py-3">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2.5" aria-label={`${site.name} — página inicial`}>
+      <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500 text-white">
+        <Icon name="heart-handshake" class="h-6 w-6" />
+      </span>
+      <span class="flex flex-col leading-none">
+        <span class="text-base font-extrabold tracking-tight text-navy-800">Caroli</span>
+        <span class="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">Soluções em Saúde</span>
+      </span>
+    </a>
+
+    <!-- Navegação desktop -->
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Navegação principal">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "rounded-full px-3.5 py-2 text-sm font-medium transition-colors",
+              isActive(item.href)
+                ? "bg-brand-50 text-brand-700"
+                : "text-navy-700 hover:bg-muted hover:text-brand-600",
+            ]}
+            aria-current={isActive(item.href) ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- CTA + botão mobile -->
+    <div class="flex items-center gap-2">
+      <a href="/solicitar-cotacao" class="btn-primary hidden sm:inline-flex">
+        Solicitar Cotação
+      </a>
+      <button
+        type="button"
+        id="menu-toggle"
+        class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border text-navy-700 lg:hidden"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden h-6 w-6"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menu mobile -->
+  <nav
+    id="mobile-menu"
+    class="hidden border-t border-border bg-white lg:hidden"
+    aria-label="Navegação mobile"
+  >
+    <div class="container-page flex flex-col gap-1 py-4">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "rounded-xl px-4 py-3 text-base font-medium transition-colors",
+              isActive(item.href) ? "bg-brand-50 text-brand-700" : "text-navy-700 hover:bg-muted",
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a href="/solicitar-cotacao" class="btn-primary mt-2 w-full">Solicitar Cotação</a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById("menu-toggle")
+  const menu = document.getElementById("mobile-menu")
+  const openIcon = document.getElementById("menu-open-icon")
+  const closeIcon = document.getElementById("menu-close-icon")
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = menu?.classList.toggle("hidden") === false
+    toggle.setAttribute("aria-expanded", String(isOpen))
+    toggle.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu")
+    openIcon?.classList.toggle("hidden", isOpen)
+    closeIcon?.classList.toggle("hidden", !isOpen)
+  })
+</script>

@@ -1,0 +1,44 @@
+---
+/*
+  index.astro — Página Home
+*/
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import HeroSection from "@/components/home/HeroSection.astro"
+import BenefitsGrid from "@/components/home/BenefitsGrid.astro"
+import StepsSection from "@/components/home/StepsSection.astro"
+import OperatorsLogos from "@/components/home/OperatorsLogos.astro"
+import InstagramReels from "@/components/home/InstagramReels.astro"
+import Testimonials from "@/components/home/Testimonials.astro"
+import OwnerCard from "@/components/home/OwnerCard.astro"
+import BlogPreview from "@/components/BlogPreview.astro"
+import FAQSection from "@/components/home/FAQSection.astro"
+import CTASection from "@/components/CTASection.astro"
+import { faqs } from "@/lib/site"
+
+// Dados estruturados FAQPage
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.question,
+    acceptedAnswer: { "@type": "Answer", text: f.answer },
+  })),
+}
+---
+
+<BaseLayout
+  description="Caroli Soluções em Saúde: consultoria especializada em planos de saúde. Encontramos a melhor proteção para você e sua família com atendimento humanizado."
+  jsonLd={faqJsonLd}
+>
+  <HeroSection />
+  <BenefitsGrid />
+  <StepsSection />
+  <OperatorsLogos />
+  <InstagramReels />
+  <Testimonials />
+  <OwnerCard />
+  <BlogPreview />
+  <FAQSection />
+  <CTASection />
+</BaseLayout>

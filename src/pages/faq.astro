@@ -1,0 +1,42 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import PageHeader from "@/components/PageHeader.astro"
+import FAQAccordion from "@/components/FAQAccordion.astro"
+import CTASection from "@/components/CTASection.astro"
+import Icon from "@/components/Icon.astro"
+import { site, faqs, whatsappLink } from "@/lib/site"
+---
+
+<BaseLayout
+    title="Perguntas Frequentes"
+  description="Tire suas dúvidas sobre planos de saúde: carência, coparticipação, portabilidade, reajustes e muito mais."
+>
+  <PageHeader
+    eyebrow="FAQ"
+    title="Perguntas frequentes"
+    subtitle="Reunimos as dúvidas mais comuns sobre planos de saúde. Não encontrou o que procurava? Fale com a gente."
+    breadcrumbs={[{ label: "FAQ" }]}
+  />
+
+  <section class="section">
+    <div class="container-page">
+      <FAQAccordion faqs={faqs} />
+
+      <div class="mx-auto mt-10 max-w-3xl rounded-2xl border border-brand-100 bg-brand-50 p-8 text-center">
+        <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-100 text-brand-600">
+          <Icon name="headphones" class="h-6 w-6" />
+        </div>
+        <p class="mt-4 text-lg font-semibold text-navy-800">Ainda com dúvidas?</p>
+        <p class="mt-2 text-sm text-muted-foreground">
+          Nossa equipe está pronta para te ajudar com um atendimento humano e sem compromisso.
+        </p>
+        <a href={whatsappLink()} class="btn-whatsapp mt-5">
+          <Icon name="message-circle" class="h-4 w-4" />
+          Falar com um especialista
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+</BaseLayout>

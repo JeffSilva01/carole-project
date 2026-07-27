@@ -1,0 +1,40 @@
+---
+/*
+  OwnerCard.astro — apresentação da proprietária
+*/
+import Icon from "@/components/Icon.astro"
+---
+
+<section class="section bg-muted">
+  <div class="container-page">
+    <div class="grid items-center gap-10 lg:grid-cols-2">
+      <div class="relative order-last lg:order-first">
+        <img
+          src="https://placehold.co/640x720/ecfdf3/16a34a?text=Caroline+Fundadora"
+          alt="Caroline, fundadora da Caroli Soluções em Saúde"
+          width="640"
+          height="720"
+          loading="lazy"
+          class="w-full rounded-3xl border border-border object-cover shadow-lg"
+        />
+      </div>
+      <div>
+        <span class="eyebrow"><Icon name="heart-handshake" class="h-4 w-4" /> Conheça a proprietária</span>
+        <h2 class="mt-4 text-3xl font-extrabold tracking-tight text-navy-800 text-balance sm:text-4xl">
+          Uma missão de cuidar de pessoas
+        </h2>
+        <p class="mt-4 text-base leading-relaxed text-muted-foreground">
+          Depois de anos atuando no mercado de saúde, Caroline percebeu que faltava algo essencial: um atendimento
+          verdadeiramente humano, que traduzisse o "juridiquês" dos contratos em decisões claras e seguras.
+        </p>
+        <p class="mt-3 text-base leading-relaxed text-muted-foreground">
+          Foi assim que nasceu a Caroli Soluções em Saúde — uma consultoria que coloca você no centro de tudo,
+          com transparência, empatia e compromisso de longo prazo.
+        </p>
+        <a href="/a-proprietaria" class="btn-primary mt-8">
+          Conheça minha história <Icon name="arrow-right" class="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

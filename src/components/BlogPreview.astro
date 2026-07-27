@@ -1,0 +1,30 @@
+---
+/*
+  BlogPreview.astro — grid dos últimos artigos do blog
+*/
+import { blogPosts } from "@/lib/site"
+import Icon from "@/components/Icon.astro"
+import ArticleCard from "@/components/ArticleCard.astro"
+
+const latest = blogPosts.slice(0, 3)
+---
+
+<section class="section bg-white">
+  <div class="container-page">
+    <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+      <div class="max-w-2xl">
+        <span class="eyebrow"><Icon name="book-open" class="h-4 w-4" /> Conteúdo educativo</span>
+        <h2 class="mt-4 text-3xl font-extrabold tracking-tight text-navy-800 text-balance sm:text-4xl">
+          Aprenda antes de contratar
+        </h2>
+      </div>
+      <a href="/blog" class="btn-secondary shrink-0">
+        Ver todos os artigos <Icon name="arrow-right" class="h-4 w-4" />
+      </a>
+    </div>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      {latest.map((post) => <ArticleCard post={post} />)}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,32 @@
+---
+/*
+  FAQSection.astro — bloco de perguntas frequentes na home
+*/
+import { faqs } from "@/lib/site"
+import FAQAccordion from "@/components/FAQAccordion.astro"
+import Icon from "@/components/Icon.astro"
+---
+
+<section class="section bg-muted">
+  <div class="container-page">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="eyebrow">Perguntas frequentes</span>
+      <h2 class="mt-4 text-3xl font-extrabold tracking-tight text-navy-800 text-balance sm:text-4xl">
+        Tudo o que você precisa saber
+      </h2>
+      <p class="mt-4 text-base leading-relaxed text-muted-foreground">
+        Reunimos as dúvidas mais comuns de quem está escolhendo um plano de saúde.
+      </p>
+    </div>
+
+    <div class="mt-12">
+      <FAQAccordion faqs={faqs} />
+    </div>
+
+    <div class="mt-8 text-center">
+      <a href="/perguntas-frequentes" class="btn-secondary">
+        Ver todas as perguntas <Icon name="arrow-right" class="h-4 w-4" />
+      </a>
+    </div>
+  </div>
+</section>

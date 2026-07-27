@@ -1,0 +1,111 @@
+---
+/*
+  Footer.astro — contatos, redes sociais, links rápidos e copyright
+*/
+import { nav, site, whatsappLink } from "@/lib/site"
+import Icon from "@/components/Icon.astro"
+
+const year = new Date().getFullYear()
+const socials = [
+  { name: "Instagram", href: site.social.instagram, icon: "instagram" },
+  { name: "Facebook", href: site.social.facebook, icon: "facebook" },
+  { name: "LinkedIn", href: site.social.linkedin, icon: "linkedin" },
+  { name: "YouTube", href: site.social.youtube, icon: "youtube" },
+]
+---
+
+<footer class="bg-navy-900 text-navy-100">
+  <div class="container-page py-16">
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+      <!-- Marca -->
+      <div>
+        <div class="flex items-center gap-2.5">
+          <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500 text-white">
+            <Icon name="heart-handshake" class="h-6 w-6" />
+          </span>
+          <span class="flex flex-col leading-none">
+            <span class="text-base font-extrabold text-white">Caroli</span>
+            <span class="text-[11px] font-medium uppercase tracking-wide text-navy-100/70">Soluções em Saúde</span>
+          </span>
+        </div>
+        <p class="mt-4 text-sm leading-relaxed text-navy-100/70">
+          Consultoria especializada em planos de saúde. Segurança, proteção e tranquilidade para você e sua família.
+        </p>
+        <div class="mt-5 flex gap-2">
+          {
+            socials.map((s) => (
+              <a
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.name}
+                class="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-navy-100 transition-colors hover:bg-brand-500 hover:text-white"
+              >
+                <Icon name={s.icon} class="h-5 w-5" />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Links rápidos -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-white">Navegação</h3>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          {
+            nav.map((item) => (
+              <li>
+                <a href={item.href} class="text-navy-100/70 transition-colors hover:text-brand-300">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Planos -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-white">Planos</h3>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          <li><a href="/planos" class="text-navy-100/70 transition-colors hover:text-brand-300">Plano Individual</a></li>
+          <li><a href="/planos" class="text-navy-100/70 transition-colors hover:text-brand-300">Plano Familiar</a></li>
+          <li><a href="/planos" class="text-navy-100/70 transition-colors hover:text-brand-300">Plano Empresarial</a></li>
+          <li><a href="/planos" class="text-navy-100/70 transition-colors hover:text-brand-300">Plano por Adesão</a></li>
+          <li><a href="/perguntas-frequentes" class="text-navy-100/70 transition-colors hover:text-brand-300">Perguntas Frequentes</a></li>
+        </ul>
+      </div>
+
+      <!-- Contato -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-white">Contato</h3>
+        <ul class="mt-4 space-y-3 text-sm">
+          <li class="flex items-start gap-3">
+            <Icon name="phone" class="mt-0.5 h-5 w-5 shrink-0 text-brand-300" />
+            <a href={`tel:${site.phoneRaw}`} class="text-navy-100/70 hover:text-brand-300">{site.phone}</a>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="mail" class="mt-0.5 h-5 w-5 shrink-0 text-brand-300" />
+            <a href={`mailto:${site.email}`} class="text-navy-100/70 hover:text-brand-300">{site.email}</a>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="map-pin" class="mt-0.5 h-5 w-5 shrink-0 text-brand-300" />
+            <span class="text-navy-100/70">{site.address}</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="clock" class="mt-0.5 h-5 w-5 shrink-0 text-brand-300" />
+            <span class="text-navy-100/70">{site.hours}</span>
+          </li>
+        </ul>
+        <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" class="btn-whatsapp mt-5 w-full">
+          <Icon name="message-circle" class="h-5 w-5" /> Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-navy-100/60 sm:flex-row">
+      <p>&copy; {year} {site.name}. Todos os direitos reservados.</p>
+      <p>Este site tem caráter informativo e não substitui a consulta às condições contratuais das operadoras.</p>
+    </div>
+  </div>
+</footer>
