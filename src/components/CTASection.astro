@@ -3,6 +3,7 @@
   CTASection.astro — chamada final com botão WhatsApp (faixa de destaque)
 */
 import { whatsappLink } from "@/lib/site"
+import QuoteForm from "@/components/QuoteForm.astro"
 import Icon from "@/components/Icon.astro"
 
 interface Props {
@@ -16,33 +17,67 @@ const {
   variant = "brand",
 } = Astro.props
 
-const bg = variant === "brand" ? "bg-brand-500" : "bg-navy-800"
+const reassurances = [
+  { icon: "shield-check", text: "Seus dados são tratados com total sigilo" },
+  { icon: "clock", text: "Retornamos em até 1 dia útil" },
+  { icon: "scale", text: "Comparamos várias operadoras para você" },
+  { icon: "heart-handshake", text: "Consultoria 100% gratuita" },
+];
+
 ---
 
-<section class="section">
+<section class="section" id="solicitar-cotacao">
   <div class="container-page">
-    <div class={`relative overflow-hidden rounded-3xl ${bg} px-6 py-14 text-center sm:px-12 sm:py-16`}>
+    <div class={`relative overflow-hidden rounded-3xl bg-muted px-6 py-14 text-center sm:px-12 sm:py-16`}>
       <div class="relative mx-auto max-w-2xl">
-        <h2 class="text-2xl font-extrabold tracking-tight text-white text-balance sm:text-3xl lg:text-4xl">
+        <h2 class="text-2xl font-extrabold tracking-tight text-brand-500 text-balance sm:text-3xl lg:text-4xl">
           {title}
         </h2>
-        <p class="mt-4 text-base leading-relaxed text-white/85">{text}</p>
-        <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <a
-            href={whatsappLink()}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn w-full bg-white px-8 py-4 text-base text-brand-700 hover:bg-white/90 sm:w-auto"
-          >
-            <Icon name="message-circle" class="h-5 w-5" /> Falar no WhatsApp
-          </a>
-          <a
-            href="/solicitar-cotacao"
-            class="btn w-full border border-white/40 px-8 py-4 text-base text-white hover:bg-white/10 sm:w-auto"
-          >
-            Solicitar Cotação
-          </a>
+        <p class="my-4 text-base leading-relaxed text-navy/85">{text}</p>
+      </div>
+      <div class="grid gap-10 lg:grid-cols-3 lg:items-start">
+        <div class="lg:col-span-2">
+          <div class="card">
+            <QuoteForm />
+          </div>
         </div>
+
+        <aside class="space-y-4">
+          <div class="card">
+            <h2 class="text-lg font-bold text-navy-800">Por que solicitar aqui?</h2>
+            <ul class="mt-4 space-y-4">
+              {
+                reassurances.map((item) => (
+                  <li class="flex items-start gap-3">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+                      <Icon name={item.icon} class="h-5 w-5" />
+                    </div>
+                    <p class="text-sm font-medium text-navy-700 text-left leading-relaxed">
+                      {item.text}
+                    </p>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div class="card bg-navy-800 text-white">
+            <h2 class="text-lg font-bold">Prefere falar agora?</h2>
+            <p class="mt-2 text-sm text-white/80 leading-relaxed">
+              Fale diretamente com um consultor pelo WhatsApp e tire suas dúvidas
+              em tempo real.
+            </p>
+            <a
+              href="https://wa.me/5511999990000"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn mt-5 w-full bg-brand-500 text-white hover:bg-brand-600"
+            >
+              <Icon name="message-circle" class="h-4 w-4" />
+              Chamar no WhatsApp
+            </a>
+          </div>
+        </aside>
       </div>
     </div>
   </div>

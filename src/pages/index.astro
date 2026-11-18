@@ -9,10 +9,9 @@ import StepsSection from "@/components/home/StepsSection.astro"
 import OperatorsLogos from "@/components/home/OperatorsLogos.astro"
 import InstagramReels from "@/components/home/InstagramReels.astro"
 import Testimonials from "@/components/home/Testimonials.astro"
-import OwnerCard from "@/components/home/OwnerCard.astro"
-import BlogPreview from "@/components/BlogPreview.astro"
 import FAQSection from "@/components/home/FAQSection.astro"
 import CTASection from "@/components/CTASection.astro"
+import LocationMap from "@/components/home/LocationMap.astro"
 import { faqs } from "@/lib/site"
 
 // Dados estruturados FAQPage
@@ -32,13 +31,12 @@ const faqJsonLd = {
   jsonLd={faqJsonLd}
 >
   <HeroSection />
+  <OperatorsLogos />
   <BenefitsGrid />
   <StepsSection />
-  <OperatorsLogos />
   <InstagramReels />
   <Testimonials />
-  <OwnerCard />
-  <BlogPreview />
   <FAQSection />
   <CTASection />
+  <LocationMap />
 </BaseLayout>

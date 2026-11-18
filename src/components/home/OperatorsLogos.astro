@@ -1,11 +1,8 @@
 ---
-/*
-  OperatorsLogos.astro — grade de logos das operadoras parceiras (placeholders)
-*/
 import { operators } from "@/lib/site"
 ---
 
-<section class="section bg-white">
+<section class="section bg-white" id="operadoras">
   <div class="container-page">
     <div class="mx-auto max-w-2xl text-center">
       <h2 class="text-2xl font-bold tracking-tight text-navy-800 text-balance sm:text-3xl">
@@ -13,22 +10,22 @@ import { operators } from "@/lib/site"
       </h2>
     </div>
 
-    <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+    <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
       {
         operators.map((op) => (
-          <a
-            href={`/operadoras/${op.slug}`}
-            class="flex h-24 items-center justify-center rounded-2xl border border-border bg-muted px-4 grayscale transition-all duration-200 hover:grayscale-0 hover:border-brand-200 hover:bg-white"
+          <div
+            class="flex h-24 items-center justify-center overflow-hidden rounded-2xl border border-border"
           >
-            <img
-              src={`https://placehold.co/160x48/eef2f7/24406b?text=${encodeURIComponent(op.name)}`}
-              alt={`Logo ${op.name}`}
-              width="160"
-              height="48"
-              loading="lazy"
-              class="max-h-10 w-auto object-contain"
-            />
-          </a>
+            {op.logoUrl && (
+                <img
+                  src={op.logoUrl}
+                  alt={`Logo ${op.name}`}
+                  loading="lazy"
+                  class="h-full w-full object-contain"
+                />
+              )
+            }
+          </div>
         ))
       }
     </div>
