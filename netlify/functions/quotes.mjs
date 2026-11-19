@@ -1,13 +1,15 @@
 import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { FieldValue, getFirestore } from "firebase-admin/firestore";
 
+import { applicantTypes } from "../../src/lib/quote-applicant-types.mjs";
+
 export const config = {
   path: "/api/quotes",
   rateLimit: { windowLimit: 10, windowSize: 60, aggregateBy: ["ip", "domain"] },
 };
 
 const limit = 8192;
-const plans = ["individual", "family", "business", "association"];
+const allowedApplicantTypes = new Set(applicantTypes.map(({ value }) => value));
 
 function reply(status, message) {
   return Response.json(
@@ -42,7 +44,7 @@ async function readBody(request) {
 
 function validate(data) {
   if (!data || typeof data !== "object" || Array.isArray(data)) return;
-  const { name, whatsapp, city, planType, age, peopleCount, message, token } =
+  const { name, whatsapp, city, applicantType, age, peopleCount, message, token } =
     data;
 
   const text = (value, max) =>
@@ -53,7 +55,7 @@ function validate(data) {
   const integer = (value, min, max) =>
     Number.isSafeInteger(value) && value >= min && value <= max;
 
-  if (!text(name, 120) || !text(city, 120) || !plans.includes(planType)) return;
+  if (!text(name, 120) || !text(city, 120) || !allowedApplicantTypes.has(applicantType)) return;
 
   if (!text(whatsapp, 30) || !/^[+\d().\s-]+$/.test(whatsapp)) return;
 
@@ -74,7 +76,7 @@ function validate(data) {
     name: name.trim(),
     whatsapp: phone,
     city: city.trim(),
-    planType,
+    applicantType,
     ...(age !== undefined && { age }),
     ...(peopleCount !== undefined && { peopleCount }),
     ...(message !== undefined && { message: message.trim() }),

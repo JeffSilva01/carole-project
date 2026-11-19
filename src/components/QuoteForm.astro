@@ -1,11 +1,11 @@
 ---
+import { applicantTypes } from "@/lib/quote-applicant-types.mjs"
 import Icon from "@/components/Icon.astro"
 ---
 
 <form id="quote-form" class="grid gap-5" method="post" action="/api/quotes">
-  <div class="grid gap-5 sm:grid-cols-2">
-    <div class="sm:col-span-2">
-      <label for="q-name" class="mb-1.5 block text-sm font-medium text-navy-700">Nome completo</label>
+  <div class="grid gap-x-4 gap-y-3 sm:grid-cols-2">
+    <div class="relative sm:col-span-2">
       <input
         id="q-name"
         name="name"
@@ -13,13 +13,13 @@ import Icon from "@/components/Icon.astro"
         type="text"
         required
         autocomplete="name"
-        placeholder="Seu nome"
-        class="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-navy-800 outline-none transition-colors placeholder:text-muted-foreground focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
+        placeholder=" "
+        class="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-navy-800 outline-none transition-colors focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
       />
+      <label for="q-name" class="floating-label">Nome completo</label>
     </div>
 
-    <div>
-      <label for="q-whatsapp" class="mb-1.5 block text-sm font-medium text-navy-700">WhatsApp</label>
+    <div class="relative">
       <input
         id="q-whatsapp"
         name="whatsapp"
@@ -27,13 +27,13 @@ import Icon from "@/components/Icon.astro"
         type="tel"
         required
         autocomplete="tel"
-        placeholder="(11) 99999-0000"
-        class="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-navy-800 outline-none transition-colors placeholder:text-muted-foreground focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
+        placeholder=" "
+        class="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-navy-800 outline-none transition-colors focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
       />
+      <label for="q-whatsapp" class="floating-label">WhatsApp</label>
     </div>
 
-    <div>
-      <label for="q-city" class="mb-1.5 block text-sm font-medium text-navy-700">Cidade</label>
+    <div class="relative">
       <input
         id="q-city"
         name="city"
@@ -41,60 +41,59 @@ import Icon from "@/components/Icon.astro"
         type="text"
         required
         autocomplete="address-level2"
-        placeholder="Sua cidade"
-        class="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-navy-800 outline-none transition-colors placeholder:text-muted-foreground focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
+        placeholder=" "
+        class="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-navy-800 outline-none transition-colors focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
       />
+      <label for="q-city" class="floating-label">Cidade</label>
     </div>
 
-    <div>
-      <label for="q-age" class="mb-1.5 block text-sm font-medium text-navy-700">Idade</label>
+    <div class="relative">
       <input
         id="q-age"
         name="age"
         type="number"
         min="0"
         max="120"
-        placeholder="Ex: 35"
-        class="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-navy-800 outline-none transition-colors placeholder:text-muted-foreground focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
-      />
-    </div>
-
-    <div>
-      <label for="q-plan-type" class="mb-1.5 block text-sm font-medium text-navy-700">Tipo de plano</label>
-      <select
-        id="q-plan-type"
-        name="planType"
+        placeholder=" "
         class="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-navy-800 outline-none transition-colors focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
-      >
-        <option value="individual">Individual</option>
-        <option value="family">Familiar</option>
-        <option value="business">Empresarial</option>
-        <option value="association">Por Adesão</option>
-      </select>
+      />
+      <label for="q-age" class="floating-label">Idade</label>
     </div>
 
-    <div>
-      <label for="q-people-count" class="mb-1.5 block text-sm font-medium text-navy-700">Quantidade de pessoas</label>
+    <div class="relative">
       <input
         id="q-people-count"
         name="peopleCount"
         type="number"
         min="1"
-        placeholder="Ex: 3"
-        class="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-navy-800 outline-none transition-colors placeholder:text-muted-foreground focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
+        placeholder=" "
+        class="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-navy-800 outline-none transition-colors focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
       />
+      <label for="q-people-count" class="floating-label">Quantidade de pessoas</label>
     </div>
 
-    <div class="sm:col-span-2">
-      <label for="q-message" class="mb-1.5 block text-sm font-medium text-navy-700">Mensagem (opcional)</label>
+    <fieldset class="min-w-0 sm:col-span-2">
+      <legend class="mb-1 text-sm font-medium text-navy-700">Tipo de contratação</legend>
+      <div class="flex flex-wrap gap-x-4">
+        {applicantTypes.map(({ value, label }) => (
+          <label class="flex min-h-8 cursor-pointer items-center gap-2 text-sm text-navy-700">
+            <input type="radio" name="applicantType" value={value} required class="h-4 w-4 accent-brand-600" />
+            {label}
+          </label>
+        ))}
+      </div>
+    </fieldset>
+
+    <div class="relative sm:col-span-2">
       <textarea
         id="q-message"
         name="message"
         maxlength="1000"
         rows="4"
-        placeholder="Conte um pouco sobre o que você procura..."
-        class="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-navy-800 outline-none transition-colors placeholder:text-muted-foreground focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
+        placeholder=" "
+        class="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-navy-800 outline-none transition-colors focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
       ></textarea>
+      <label for="q-message" class="floating-label">Mensagem (opcional)</label>
     </div>
   </div>
 
@@ -136,7 +135,7 @@ import Icon from "@/components/Icon.astro"
       name: data.get("name").trim(),
       whatsapp: data.get("whatsapp").trim(),
       city: data.get("city").trim(),
-      planType: data.get("planType"),
+      applicantType: data.get("applicantType"),
       token,
     }
     for (const field of ["age", "peopleCount"]) {
@@ -170,3 +169,30 @@ import Icon from "@/components/Icon.astro"
     }
   })
 </script>
+
+<style>
+  .floating-label {
+    position: absolute;
+    inset-inline-start: 0.75rem;
+    top: 0;
+    transform: translateY(-50%);
+    padding-inline: 0.25rem;
+    background: white;
+    color: var(--color-navy-700);
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: top 150ms ease, transform 150ms ease, font-size 150ms ease;
+  }
+
+  :is(input, textarea):placeholder-shown:not(:focus):not(:autofill) + .floating-label {
+    top: 0.75rem;
+    transform: none;
+    font-size: 0.875rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .floating-label {
+      transition: none;
+    }
+  }
+</style>

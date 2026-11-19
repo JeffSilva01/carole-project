@@ -9,8 +9,9 @@ export const site = {
   phoneRaw: "5585997322960",
   whatsapp: "5585997322960",
   email: "contato@carolisolucoes.com.br",
-  address: "Av. Paulista, 1000 — Bela Vista, São Paulo — SP, 01310-100",
-  hours: "Seg a Sex, 9h às 18h",
+  address:
+    "Av. Treze de Maio, 1422 - Lj 17 - Fátima, Fortaleza - CE, 60040-531, Brasil",
+  hours: "Seg a Sex, 8h às 17h",
   social: {
     instagram: "https://instagram.com/carolisolucoesemsaude",
     facebook: "https://facebook.com/carolisolucoes",
