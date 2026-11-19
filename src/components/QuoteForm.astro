@@ -1,18 +1,15 @@
 ---
-/*
-  QuoteForm.astro — formulário de cotação. Envia via WhatsApp por padrão (sem backend).
-*/
 import Icon from "@/components/Icon.astro"
-import { site } from "@/lib/site"
 ---
 
-<form id="quote-form" class="grid gap-5" novalidate>
+<form id="quote-form" class="grid gap-5" method="post" action="/api/cotacoes">
   <div class="grid gap-5 sm:grid-cols-2">
     <div class="sm:col-span-2">
       <label for="q-nome" class="mb-1.5 block text-sm font-medium text-navy-700">Nome completo</label>
       <input
         id="q-nome"
         name="nome"
+        maxlength="120"
         type="text"
         required
         autocomplete="name"
@@ -26,6 +23,7 @@ import { site } from "@/lib/site"
       <input
         id="q-whatsapp"
         name="whatsapp"
+        maxlength="30"
         type="tel"
         required
         autocomplete="tel"
@@ -39,6 +37,7 @@ import { site } from "@/lib/site"
       <input
         id="q-cidade"
         name="cidade"
+        maxlength="120"
         type="text"
         required
         autocomplete="address-level2"
@@ -91,6 +90,7 @@ import { site } from "@/lib/site"
       <textarea
         id="q-mensagem"
         name="mensagem"
+        maxlength="1000"
         rows="4"
         placeholder="Conte um pouco sobre o que você procura..."
         class="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-navy-800 outline-none transition-colors placeholder:text-muted-foreground focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
@@ -98,6 +98,7 @@ import { site } from "@/lib/site"
     </div>
   </div>
 
+  <div class="cf-turnstile" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY} data-action="cotacao"></div>
   <button type="submit" class="btn-primary w-full py-4 text-base">
     <Icon name="message-circle" class="h-5 w-5" /> Receber Cotação
   </button>
@@ -105,42 +106,67 @@ import { site } from "@/lib/site"
   <p id="quote-status" class="hidden rounded-xl bg-brand-50 px-4 py-3 text-sm font-medium text-brand-700" role="status"></p>
 </form>
 
-<script define:vars={{ whatsapp: site.whatsapp }}>
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script is:inline>
   const form = document.getElementById("quote-form")
-  const status = document.getElementById("quote-status")
+  const quoteStatus = document.getElementById("quote-status")
+  const submitButton = form.querySelector('button[type="submit"]')
+  const widget = form.querySelector(".cf-turnstile")
 
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault()
+  function showStatus(message, error = false) {
+    quoteStatus.textContent = message
+    quoteStatus.classList.remove("hidden")
+    quoteStatus.classList.toggle("bg-red-50", error)
+    quoteStatus.classList.toggle("text-red-700", error)
+    quoteStatus.classList.toggle("bg-brand-50", !error)
+    quoteStatus.classList.toggle("text-brand-700", !error)
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault()
+    if (submitButton.disabled) return
     const data = new FormData(form)
-    const nome = data.get("nome")
-    const whatsappField = data.get("whatsapp")
-    const cidade = data.get("cidade")
-
-    if (!nome || !whatsappField || !cidade) {
-      if (status) {
-        status.textContent = "Por favor, preencha nome, WhatsApp e cidade."
-        status.classList.remove("hidden", "bg-brand-50", "text-brand-700")
-        status.classList.add("bg-red-50", "text-red-700")
-      }
+    const token = data.get("cf-turnstile-response")
+    if (!token) {
+      showStatus("Aguarde ou conclua a validação de segurança para enviar.", true)
       return
     }
 
-    const msg =
-      `Olá! Gostaria de solicitar uma cotação.%0A%0A` +
-      `*Nome:* ${nome}%0A` +
-      `*WhatsApp:* ${whatsappField}%0A` +
-      `*Cidade:* ${cidade}%0A` +
-      `*Idade:* ${data.get("idade") || "-"}%0A` +
-      `*Tipo de plano:* ${data.get("tipo")}%0A` +
-      `*Pessoas:* ${data.get("pessoas") || "-"}%0A` +
-      `*Mensagem:* ${data.get("mensagem") || "-"}`
-
-    if (status) {
-      status.textContent = "Redirecionando para o WhatsApp..."
-      status.classList.remove("hidden", "bg-red-50", "text-red-700")
-      status.classList.add("bg-brand-50", "text-brand-700")
+    const quote = {
+      nome: data.get("nome").trim(),
+      whatsapp: data.get("whatsapp").trim(),
+      cidade: data.get("cidade").trim(),
+      tipo: data.get("tipo"),
+      token,
     }
+    for (const field of ["idade", "pessoas"]) {
+      const value = data.get(field)
+      if (value !== "") quote[field] = Number(value)
+    }
+    const mensagem = data.get("mensagem").trim()
+    if (mensagem) quote.mensagem = mensagem
 
-    window.open(`https://wa.me/${whatsapp}?text=${msg}`, "_blank")
+    submitButton.disabled = true
+    showStatus("Enviando sua solicitação…")
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(quote),
+        signal: AbortSignal.timeout(15000),
+      })
+      if (response.status === 429) {
+        showStatus("Aguarde um minuto antes de tentar novamente.", true)
+        return
+      }
+      const { message } = await response.json()
+      if (response.status === 201) form.reset()
+      showStatus(message, response.status !== 201)
+    } catch {
+      showStatus("Não foi possível confirmar o envio. Tente novamente mais tarde.", true)
+    } finally {
+      submitButton.disabled = false
+      window.turnstile?.reset(widget)
+    }
   })
 </script>
