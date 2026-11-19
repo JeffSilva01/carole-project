@@ -1,7 +1,4 @@
 ---
-/*
-  BaseLayout.astro — layout raiz que envolve todas as páginas com Header e Footer
-*/
 import "@/styles/global.css"
 import SEOHead from "@/components/SEOHead.astro"
 import Header from "@/components/Header.astro"
@@ -19,7 +16,7 @@ interface Props {
 
 const { title, description, image, noindex, jsonLd } = Astro.props
 
-// Dados estruturados globais — Organization + LocalBusiness
+// Global Organization and LocalBusiness structured data
 const orgJsonLd = {
   "@context": "https://schema.org",
   "@type": ["Organization", "LocalBusiness", "InsuranceAgency"],

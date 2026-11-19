@@ -2,12 +2,12 @@ import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { FieldValue, getFirestore } from "firebase-admin/firestore";
 
 export const config = {
-  path: "/api/cotacoes",
+  path: "/api/quotes",
   rateLimit: { windowLimit: 10, windowSize: 60, aggregateBy: ["ip", "domain"] },
 };
 
 const limit = 8192;
-const plans = ["Individual", "Familiar", "Empresarial", "Por Adesão"];
+const plans = ["individual", "family", "business", "association"];
 
 function reply(status, message) {
   return Response.json(
@@ -42,7 +42,7 @@ async function readBody(request) {
 
 function validate(data) {
   if (!data || typeof data !== "object" || Array.isArray(data)) return;
-  const { nome, whatsapp, cidade, tipo, idade, pessoas, mensagem, token } =
+  const { name, whatsapp, city, planType, age, peopleCount, message, token } =
     data;
 
   const text = (value, max) =>
@@ -53,7 +53,7 @@ function validate(data) {
   const integer = (value, min, max) =>
     Number.isSafeInteger(value) && value >= min && value <= max;
 
-  if (!text(nome, 120) || !text(cidade, 120) || !plans.includes(tipo)) return;
+  if (!text(name, 120) || !text(city, 120) || !plans.includes(planType)) return;
 
   if (!text(whatsapp, 30) || !/^[+\d().\s-]+$/.test(whatsapp)) return;
 
@@ -61,23 +61,23 @@ function validate(data) {
 
   if (!/^(?:55)?[1-9]\d{9,10}$/.test(phone)) return;
 
-  if (idade !== undefined && !integer(idade, 0, 120)) return;
+  if (age !== undefined && !integer(age, 0, 120)) return;
 
-  if (pessoas !== undefined && !integer(pessoas, 1, Number.MAX_SAFE_INTEGER))
+  if (peopleCount !== undefined && !integer(peopleCount, 1, Number.MAX_SAFE_INTEGER))
     return;
 
-  if (mensagem !== undefined && !text(mensagem, 1000)) return;
+  if (message !== undefined && !text(message, 1000)) return;
 
   if (!text(token, 2048)) return;
 
   return {
-    nome: nome.trim(),
+    name: name.trim(),
     whatsapp: phone,
-    cidade: cidade.trim(),
-    tipo,
-    ...(idade !== undefined && { idade }),
-    ...(pessoas !== undefined && { pessoas }),
-    ...(mensagem !== undefined && { mensagem: mensagem.trim() }),
+    city: city.trim(),
+    planType,
+    ...(age !== undefined && { age }),
+    ...(peopleCount !== undefined && { peopleCount }),
+    ...(message !== undefined && { message: message.trim() }),
   };
 }
 
@@ -142,7 +142,7 @@ export default async function handler(request, context) {
 
     if (
       !result.success ||
-      result.action !== "cotacao" ||
+      result.action !== "quote" ||
       result.hostname !== new URL(QUOTE_ORIGIN).hostname
     ) {
       return reply(
@@ -154,14 +154,14 @@ export default async function handler(request, context) {
     stage = "QUOTE_FIRESTORE";
 
     const app =
-      getApps().find(({ name }) => name === "cotacoes") ??
+      getApps().find(({ name }) => name === "quotes") ??
       initializeApp(
         { credential: cert(JSON.parse(FIREBASE_SERVICE_ACCOUNT_JSON)) },
-        "cotacoes",
+        "quotes",
       );
 
     await getFirestore(app)
-      .collection("cotacoes")
+      .collection("quotes")
       .doc()
       .create({
         ...quote,

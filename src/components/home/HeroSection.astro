@@ -1,14 +1,11 @@
 ---
-/*
-  HeroSection.astro — banner principal com vídeo/mensagem e CTAs
-*/
 import { whatsappLink } from "@/lib/site"
 import Icon from "@/components/Icon.astro"
 ---
 
 <section class="relative overflow-hidden bg-white">
   <div class="container-page grid items-center gap-12 py-16 lg:grid-cols-2 lg:py-24">
-    <!-- Texto -->
+    <!-- Copy -->
     <div>
       <span class="eyebrow">
         <Icon name="shield-check" class="h-4 w-4" /> Consultoria especializada
@@ -21,7 +18,7 @@ import Icon from "@/components/Icon.astro"
         humano e sem custo adicional.
       </p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a href="/#solicitar-cotacao" class="btn-primary px-8 py-4 text-base">
+        <a href="/#request-quote" class="btn-primary px-8 py-4 text-base">
           Solicitar Cotação
         </a>
         <a
@@ -40,7 +37,7 @@ import Icon from "@/components/Icon.astro"
       </div>
     </div>
 
-    <!-- Vídeo / foto em destaque -->
+    <!-- Featured video or photo -->
     <div class="relative">
       <div class="relative overflow-hidden rounded-3xl border border-border shadow-xl shadow-navy-900/10">
         <img
@@ -61,7 +58,7 @@ import Icon from "@/components/Icon.astro"
           </span>
         </button>
       </div>
-      <!-- Selo de confiança flutuante -->
+      <!-- Floating trust badge -->
       <div class="absolute -bottom-5 -left-5 hidden rounded-2xl border border-border bg-white p-4 shadow-lg sm:block">
         <div class="flex items-center gap-3">
           <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600">

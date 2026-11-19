@@ -2,13 +2,13 @@
 
 /*
   Caroli Soluções em Saúde — Design tokens
-  Paleta: Verde (primário/CTA), Branco (fundo), Azul escuro (confiança/rodapé)
+  Green for primary actions, white for backgrounds, and navy for the footer
 */
 @theme {
   /* Fonts */
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 
-  /* Brand — Verde */
+  /* Brand green */
   --color-brand-50: #ecfdf3;
   --color-brand-100: #d1fae0;
   --color-brand-200: #a6f3c4;
@@ -20,7 +20,7 @@
   --color-brand-800: #0d572a;
   --color-brand-900: #0a4522;
 
-  /* Azul escuro — confiança/profissionalismo */
+  /* Navy */
   --color-navy-50: #eef2f7;
   --color-navy-100: #d5dfeb;
   --color-navy-400: #3a5578;
@@ -29,7 +29,7 @@
   --color-navy-800: #101f39;
   --color-navy-900: #0b1628;
 
-  /* Neutros */
+  /* Neutrals */
   --color-background: #ffffff;
   --color-foreground: #101f39;
   --color-muted: #f4f7fa;

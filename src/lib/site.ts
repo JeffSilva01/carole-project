@@ -1,4 +1,4 @@
-// Dados centrais do site — usados em toda a aplicação
+// Site-wide data
 export const site = {
   name: "Caroli Soluções em Saúde",
   shortName: "Caroli",
@@ -23,9 +23,9 @@ export const whatsappLink = (
 ) => `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
 
 export const nav = [
-  { label: "Home", href: "/" },
-  { label: "Operadoras", href: "/#operadoras" },
-  { label: "Contato", href: "/#contato" },
+  { label: "Início", href: "/" },
+  { label: "Operadoras", href: "/#operators" },
+  { label: "Contato", href: "/#contact" },
 ];
 
 export const benefits = [
@@ -94,7 +94,7 @@ export const operators: Operator[] = [
   },
   {
     name: "Bradesco Saúde",
-    logoUrl: "/images/bradesco-saude-logo.webp",
+    logoUrl: "/images/bradesco-logo.webp",
   },
   {
     name: "SulAmérica",
@@ -142,36 +142,36 @@ export const faqs = [
     question: "Como funciona a carência?",
     answer:
       "Carência é o período que você aguarda após a contratação para usar certos serviços. Varia conforme o procedimento — urgências costumam ter 24h, enquanto partos podem chegar a 300 dias. Ajudamos a reduzir ou aproveitar portabilidade de carências.",
-    category: "Carência",
+    category: "waiting-period",
   },
   {
     question: "Vale a pena contratar por corretora?",
     answer:
       "Sim. O valor do plano é o mesmo, mas você ganha consultoria especializada, comparação entre operadoras e suporte contínuo — tudo sem custo adicional.",
-    category: "Contratação",
+    category: "enrollment",
   },
   {
     question: "Posso trocar de plano?",
     answer:
       "Pode. Existe a portabilidade de carências, que permite mudar de operadora aproveitando o tempo já cumprido, desde que cumpridos alguns requisitos. Nós orientamos todo o processo.",
-    category: "Troca de plano",
+    category: "plan-switching",
   },
   {
     question: "O plano cobre parto?",
     answer:
       "Planos com segmentação hospitalar com obstetrícia cobrem parto. Normalmente há carência de até 300 dias. Indicamos o plano certo se essa cobertura for prioridade para você.",
-    category: "Cobertura",
+    category: "coverage",
   },
   {
     question: "Existe reajuste?",
     answer:
       "Sim, há reajuste anual (por variação de custos) e, em alguns casos, por mudança de faixa etária. Explicamos as regras de cada operadora antes da contratação.",
-    category: "Reajustes",
+    category: "price-adjustments",
   },
   {
     question: "Como funciona a coparticipação?",
     answer:
       "Na coparticipação você paga uma mensalidade menor e um valor por uso (consultas, exames). É ideal para quem usa o plano com menos frequência. Avaliamos se compensa no seu caso.",
-    category: "Coparticipação",
+    category: "cost-sharing",
   },
 ];

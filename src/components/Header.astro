@@ -1,7 +1,4 @@
 ---
-/*
-  Header.astro — menu fixo no topo com logo, navegação e CTA "Solicitar Cotação"
-*/
 import { nav, site } from "@/lib/site"
 import Icon from "@/components/Icon.astro"
 
@@ -22,7 +19,7 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
       </span>
     </a>
 
-    <!-- Navegação desktop -->
+    <!-- Desktop navigation -->
     <nav class="hidden items-center gap-1 lg:flex" aria-label="Navegação principal">
       {
         nav.map((item) => (
@@ -42,9 +39,9 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
       }
     </nav>
 
-    <!-- CTA + botão mobile -->
+    <!-- CTA and mobile menu button -->
     <div class="flex items-center gap-2">
-      <a href="/#solicitar-cotacao" class="btn-primary hidden sm:inline-flex">
+      <a href="/#request-quote" class="btn-primary hidden sm:inline-flex">
         Solicitar Cotação
       </a>
       <button
@@ -61,7 +58,7 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     </div>
   </div>
 
-  <!-- Menu mobile -->
+  <!-- Mobile menu -->
   <nav
     id="mobile-menu"
     class="hidden border-t border-border bg-white lg:hidden"
@@ -81,7 +78,7 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
           </a>
         ))
       }
-      <a href="/#solicitar-cotacao" class="btn-primary mt-2 w-full">Solicitar Cotação</a>
+      <a href="/#request-quote" class="btn-primary mt-2 w-full">Solicitar Cotação</a>
     </div>
   </nav>
 </header>

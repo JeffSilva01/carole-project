@@ -2,13 +2,13 @@
 import Icon from "@/components/Icon.astro"
 ---
 
-<form id="quote-form" class="grid gap-5" method="post" action="/api/cotacoes">
+<form id="quote-form" class="grid gap-5" method="post" action="/api/quotes">
   <div class="grid gap-5 sm:grid-cols-2">
     <div class="sm:col-span-2">
-      <label for="q-nome" class="mb-1.5 block text-sm font-medium text-navy-700">Nome completo</label>
+      <label for="q-name" class="mb-1.5 block text-sm font-medium text-navy-700">Nome completo</label>
       <input
-        id="q-nome"
-        name="nome"
+        id="q-name"
+        name="name"
         maxlength="120"
         type="text"
         required
@@ -33,10 +33,10 @@ import Icon from "@/components/Icon.astro"
     </div>
 
     <div>
-      <label for="q-cidade" class="mb-1.5 block text-sm font-medium text-navy-700">Cidade</label>
+      <label for="q-city" class="mb-1.5 block text-sm font-medium text-navy-700">Cidade</label>
       <input
-        id="q-cidade"
-        name="cidade"
+        id="q-city"
+        name="city"
         maxlength="120"
         type="text"
         required
@@ -47,10 +47,10 @@ import Icon from "@/components/Icon.astro"
     </div>
 
     <div>
-      <label for="q-idade" class="mb-1.5 block text-sm font-medium text-navy-700">Idade</label>
+      <label for="q-age" class="mb-1.5 block text-sm font-medium text-navy-700">Idade</label>
       <input
-        id="q-idade"
-        name="idade"
+        id="q-age"
+        name="age"
         type="number"
         min="0"
         max="120"
@@ -60,24 +60,24 @@ import Icon from "@/components/Icon.astro"
     </div>
 
     <div>
-      <label for="q-tipo" class="mb-1.5 block text-sm font-medium text-navy-700">Tipo de plano</label>
+      <label for="q-plan-type" class="mb-1.5 block text-sm font-medium text-navy-700">Tipo de plano</label>
       <select
-        id="q-tipo"
-        name="tipo"
+        id="q-plan-type"
+        name="planType"
         class="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-navy-800 outline-none transition-colors focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
       >
-        <option value="Individual">Individual</option>
-        <option value="Familiar">Familiar</option>
-        <option value="Empresarial">Empresarial</option>
-        <option value="Por Adesão">Por Adesão</option>
+        <option value="individual">Individual</option>
+        <option value="family">Familiar</option>
+        <option value="business">Empresarial</option>
+        <option value="association">Por Adesão</option>
       </select>
     </div>
 
     <div>
-      <label for="q-pessoas" class="mb-1.5 block text-sm font-medium text-navy-700">Quantidade de pessoas</label>
+      <label for="q-people-count" class="mb-1.5 block text-sm font-medium text-navy-700">Quantidade de pessoas</label>
       <input
-        id="q-pessoas"
-        name="pessoas"
+        id="q-people-count"
+        name="peopleCount"
         type="number"
         min="1"
         placeholder="Ex: 3"
@@ -86,10 +86,10 @@ import Icon from "@/components/Icon.astro"
     </div>
 
     <div class="sm:col-span-2">
-      <label for="q-mensagem" class="mb-1.5 block text-sm font-medium text-navy-700">Mensagem (opcional)</label>
+      <label for="q-message" class="mb-1.5 block text-sm font-medium text-navy-700">Mensagem (opcional)</label>
       <textarea
-        id="q-mensagem"
-        name="mensagem"
+        id="q-message"
+        name="message"
         maxlength="1000"
         rows="4"
         placeholder="Conte um pouco sobre o que você procura..."
@@ -98,7 +98,7 @@ import Icon from "@/components/Icon.astro"
     </div>
   </div>
 
-  <div class="cf-turnstile" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY} data-action="cotacao"></div>
+  <div class="cf-turnstile" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY} data-action="quote"></div>
   <button type="submit" class="btn-primary w-full py-4 text-base">
     <Icon name="message-circle" class="h-5 w-5" /> Receber Cotação
   </button>
@@ -133,18 +133,18 @@ import Icon from "@/components/Icon.astro"
     }
 
     const quote = {
-      nome: data.get("nome").trim(),
+      name: data.get("name").trim(),
       whatsapp: data.get("whatsapp").trim(),
-      cidade: data.get("cidade").trim(),
-      tipo: data.get("tipo"),
+      city: data.get("city").trim(),
+      planType: data.get("planType"),
       token,
     }
-    for (const field of ["idade", "pessoas"]) {
+    for (const field of ["age", "peopleCount"]) {
       const value = data.get(field)
       if (value !== "") quote[field] = Number(value)
     }
-    const mensagem = data.get("mensagem").trim()
-    if (mensagem) quote.mensagem = mensagem
+    const message = data.get("message").trim()
+    if (message) quote.message = message
 
     submitButton.disabled = true
     showStatus("Enviando sua solicitação…")

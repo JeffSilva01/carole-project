@@ -1,7 +1,4 @@
 ---
-/*
-  BenefitsGrid.astro — grade de benefícios com ícones
-*/
 import { benefits } from "@/lib/site"
 import Icon from "@/components/Icon.astro"
 ---
@@ -30,13 +27,13 @@ import Icon from "@/components/Icon.astro"
           </article>
         ))
       }
-      <!-- Card de destaque final -->
+      <!-- Featured card -->
       <article class="card flex flex-col justify-center bg-navy-800 text-white">
         <h3 class="text-lg font-bold text-white">Ainda com dúvidas?</h3>
         <p class="mt-2 text-sm leading-relaxed text-navy-100/80">
           Converse com uma consultora e receba orientação personalizada agora mesmo.
         </p>
-        <a href="/#solicitar-cotacao" class="btn mt-5 w-fit bg-brand-500 px-5 py-2.5 text-white hover:bg-brand-600">
+        <a href="/#request-quote" class="btn mt-5 w-fit bg-brand-500 px-5 py-2.5 text-white hover:bg-brand-600">
           Solicitar Cotação <Icon name="arrow-right" class="h-4 w-4" />
         </a>
       </article>

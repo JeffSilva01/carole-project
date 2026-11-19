@@ -1,7 +1,4 @@
 ---
-/*
-  Footer.astro — contatos, redes sociais, links rápidos e copyright
-*/
 import { nav, site, whatsappLink } from "@/lib/site"
 import Icon from "@/components/Icon.astro"
 
@@ -13,10 +10,10 @@ const socials = [
 ]
 ---
 
-<footer class="bg-navy-900 text-navy-100">
+<footer id="contact" class="bg-navy-900 text-navy-100">
   <div class="container-page py-16">
     <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-      <!-- Marca -->
+      <!-- Brand -->
       <div>
         <div class="flex items-center gap-2.5">
           <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500 text-white">
@@ -47,7 +44,7 @@ const socials = [
         </div>
       </div>
 
-      <!-- Links rápidos -->
+      <!-- Quick links -->
       <div>
         <h3 class="text-sm font-semibold uppercase tracking-wide text-white">Navegação</h3>
         <ul class="mt-4 space-y-2.5 text-sm">
@@ -63,19 +60,19 @@ const socials = [
         </ul>
       </div>
 
-      <!-- Planos -->
+      <!-- Plans -->
       <div>
         <h3 class="text-sm font-semibold uppercase tracking-wide text-white">Planos</h3>
         <ul class="mt-4 space-y-2.5 text-sm">
-          <li><a href="/planos" class="text-navy-100/70 transition-colors hover:text-brand-300">Plano Individual</a></li>
-          <li><a href="/planos" class="text-navy-100/70 transition-colors hover:text-brand-300">Plano Familiar</a></li>
-          <li><a href="/planos" class="text-navy-100/70 transition-colors hover:text-brand-300">Plano Empresarial</a></li>
-          <li><a href="/planos" class="text-navy-100/70 transition-colors hover:text-brand-300">Plano por Adesão</a></li>
-          <li><a href="/perguntas-frequentes" class="text-navy-100/70 transition-colors hover:text-brand-300">Perguntas Frequentes</a></li>
+          <li><a href="/#request-quote" class="text-navy-100/70 transition-colors hover:text-brand-300">Plano Individual</a></li>
+          <li><a href="/#request-quote" class="text-navy-100/70 transition-colors hover:text-brand-300">Plano Familiar</a></li>
+          <li><a href="/#request-quote" class="text-navy-100/70 transition-colors hover:text-brand-300">Plano Empresarial</a></li>
+          <li><a href="/#request-quote" class="text-navy-100/70 transition-colors hover:text-brand-300">Plano por Adesão</a></li>
+          <li><a href="/#faq" class="text-navy-100/70 transition-colors hover:text-brand-300">Perguntas Frequentes</a></li>
         </ul>
       </div>
 
-      <!-- Contato -->
+      <!-- Contact -->
       <div>
         <h3 class="text-sm font-semibold uppercase tracking-wide text-white">Contato</h3>
         <ul class="mt-4 space-y-3 text-sm">
