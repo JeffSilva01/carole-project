@@ -3,6 +3,7 @@ import "@/styles/global.css"
 import SEOHead from "@/components/SEOHead.astro"
 import Header from "@/components/Header.astro"
 import Footer from "@/components/Footer.astro"
+import CookieConsent from "@/components/CookieConsent.astro"
 import WhatsAppFloat from "@/components/WhatsAppFloat.astro"
 import { site } from "@/lib/site"
 
@@ -55,5 +56,6 @@ const combinedJsonLd = jsonLd ? [orgJsonLd, ...(Array.isArray(jsonLd) ? jsonLd :
     </main>
     <Footer />
     <WhatsAppFloat />
+    <CookieConsent />
   </body>
 </html>

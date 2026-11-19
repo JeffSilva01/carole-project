@@ -1,0 +1,27 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import { site } from "@/lib/site"
+---
+
+<BaseLayout title="Aviso de cookies" description="Conheça as tecnologias usadas no site e gerencie suas preferências.">
+  <article class="container-page max-w-3xl space-y-5 py-16 text-navy-800">
+    <h1 class="text-3xl font-bold">Aviso de cookies</h1>
+    <p>Este aviso explica como a {site.name} usa cookies e outras tecnologias no site. Você pode mudar ou revogar sua escolha gratuitamente a qualquer momento.</p>
+    <button type="button" class="btn-secondary" data-cookie-action="settings">Configurações de cookies</button>
+
+    <h2 class="text-xl font-bold">Recursos necessários</h2>
+    <p>O site armazena neste navegador a sua escolha, a data e a versão deste aviso por até 180 dias. O formulário usa o Cloudflare Turnstile para validar envios e prevenir abusos. O serviço pode processar sinais de rede e do navegador para essa finalidade.</p>
+
+    <h2 class="text-xl font-bold">Medição de audiência</h2>
+    <p>Quando habilitado e autorizado por você, o Google Analytics recebe uma visualização da página, dados técnicos do navegador e identificadores de medição. Os dados são usados para entender o volume de visitas. Os cookies próprios do GA4 terão duração configurada de até 180 dias.</p>
+
+    <h2 class="text-xl font-bold">Publicidade</h2>
+    <p>Google Ads, Meta Pixel e TikTok Pixel estão desativados. Se forem ativados futuramente, o aviso será atualizado com os dados, as finalidades, os fornecedores e os prazos aplicáveis antes de solicitar sua escolha.</p>
+
+    <h2 class="text-xl font-bold">Conteúdo externo e compartilhamento</h2>
+    <p>O mapa conecta seu navegador ao Google Maps quando você escolhe carregá-lo, o que pode transmitir seu endereço IP e informações do navegador. Fornecedores de segurança, recursos externos e medição podem processar dados fora do Brasil. A cotação e os dados preenchidos no formulário não são enviados às tags de medição ou publicidade.</p>
+
+    <h2 class="text-xl font-bold">Contato e direitos</h2>
+    <p>Para tirar dúvidas, solicitar informações sobre o tratamento ou exercer seus direitos, escreva para <a class="underline" href={`mailto:${site.email}`}>{site.email}</a>. Você também pode apagar os dados locais nas configurações do navegador.</p>
+  </article>
+</BaseLayout>

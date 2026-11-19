@@ -22,12 +22,28 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${query}`
       </a>
     </div>
 
+    <p class="mb-3 text-sm text-muted-foreground">Ao carregar o mapa, seu navegador se conecta ao Google Maps.</p>
+    <button type="button" id="load-location-map" class="btn-secondary" aria-controls="location-map" aria-expanded="false">Carregar mapa</button>
     <iframe
-      src={embedUrl}
+      id="location-map"
+      data-src={embedUrl}
+      hidden
       title="Mapa da localização em Fortaleza"
       loading="lazy"
       referrerpolicy="strict-origin-when-cross-origin"
-      class="block h-80 w-full rounded-2xl border border-border bg-muted sm:h-96"
+      class="h-80 w-full rounded-2xl border border-border bg-muted sm:h-96"
     ></iframe>
   </div>
 </section>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>("#load-location-map")
+  const map = document.querySelector<HTMLIFrameElement>("#location-map")
+  button?.addEventListener("click", () => {
+    if (!map?.dataset.src) return
+    map.src = map.dataset.src
+    map.hidden = false
+    button?.setAttribute("aria-expanded", "true")
+    button!.disabled = true
+  }, { once: true })
+</script>

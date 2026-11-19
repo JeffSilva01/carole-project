@@ -1,0 +1,90 @@
+<aside id="cookie-banner" hidden aria-labelledby="cookie-heading"
+  class="fixed inset-x-4 bottom-4 z-[70] mx-auto max-w-2xl rounded-2xl border border-border bg-white p-4 shadow-xl sm:p-6">
+  <h2 id="cookie-heading" class="font-bold text-navy-800">Sua escolha sobre cookies</h2>
+  <p class="mt-2 text-sm text-navy-700">
+    Usamos recursos necessários para operar o site. Você pode escolher se aceita tecnologias opcionais.
+    <a href="/cookies" class="underline">Saiba mais sobre cookies</a>.
+  </p>
+  <div class="mt-4 flex flex-wrap gap-2">
+    <button type="button" class="btn-secondary" data-cookie-action="accept">Aceitar opcionais</button>
+    <button type="button" class="btn-secondary" data-cookie-action="reject">Recusar opcionais</button>
+    <button type="button" class="btn-secondary" data-cookie-action="settings">Personalizar</button>
+  </div>
+</aside>
+
+<dialog id="cookie-dialog" aria-labelledby="cookie-dialog-heading"
+  class="fixed inset-0 z-[70] m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-lg overflow-auto rounded-2xl bg-white p-6 text-navy-800 shadow-xl backdrop:bg-navy-900/50">
+  <form method="dialog">
+    <h2 id="cookie-dialog-heading" class="text-lg font-bold">Configurações de cookies</h2>
+    <p class="mt-2 text-sm">Recursos necessários mantêm o site e a segurança do formulário funcionando e ficam sempre ativos.</p>
+    <label id="cookie-analytics-option" hidden class="mt-4 items-start gap-2">
+      <input id="cookie-analytics" type="checkbox" class="mt-1 accent-brand-600" />
+      <span><strong>Medição de audiência</strong><br />Permite contar visitas com o Google Analytics.</span>
+    </label>
+    <label id="cookie-advertising-option" hidden class="mt-4 items-start gap-2">
+      <input id="cookie-advertising" type="checkbox" class="mt-1 accent-brand-600" />
+      <span><strong>Publicidade</strong><br />Permite medir visitas relacionadas a campanhas com os provedores habilitados.</span>
+    </label>
+    <p id="cookie-no-options" hidden class="mt-4 text-sm">Nenhuma tecnologia opcional está ativa nesta página.</p>
+    <a href="/cookies" class="mt-4 inline-block text-sm underline">Ler o aviso de cookies</a>
+    <div class="mt-5 flex flex-wrap gap-2">
+      <button type="button" class="btn-secondary" data-cookie-action="save">Salvar preferências</button>
+      <button type="submit" class="btn-secondary">Fechar</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+  import { consentTestMode, readPreferences, savePreferences, type Preferences } from "@/lib/tracking/consent"
+  import { analyticsId, advertisingAvailable, applyPreferences } from "@/lib/tracking/controller"
+
+  const banner = document.querySelector<HTMLElement>("#cookie-banner")!
+  const dialog = document.querySelector<HTMLDialogElement>("#cookie-dialog")!
+  const analytics = document.querySelector<HTMLInputElement>("#cookie-analytics")!
+  const advertising = document.querySelector<HTMLInputElement>("#cookie-advertising")!
+  const analyticsAvailable = consentTestMode || Boolean(analyticsId)
+  const optionalAvailable = analyticsAvailable || advertisingAvailable
+  let preferences = readPreferences()
+
+  document.querySelector<HTMLElement>("#cookie-analytics-option")!.hidden = !analyticsAvailable
+  document.querySelector<HTMLElement>("#cookie-advertising-option")!.hidden = !advertisingAvailable
+  document.querySelector<HTMLElement>("#cookie-no-options")!.hidden = optionalAvailable
+  banner.hidden = Boolean(preferences) || !optionalAvailable
+  if (consentTestMode && !preferences) dialog.showModal()
+  if (preferences) void applyPreferences(preferences)
+
+  function save(next: Preferences) {
+    preferences = next
+    savePreferences(next)
+    banner.hidden = true
+    if (dialog.open) dialog.close()
+    void applyPreferences(next)
+  }
+
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return
+    const action = event.target.closest<HTMLElement>("[data-cookie-action]")?.dataset.cookieAction
+    switch (action) {
+      case "settings":
+        analytics.checked = preferences?.analytics ?? false
+        advertising.checked = preferences?.advertising ?? false
+        if (!dialog.open) dialog.showModal()
+        break
+      case "accept":
+        save({ analytics: analyticsAvailable, advertising: advertisingAvailable })
+        break
+      case "reject":
+        save({ analytics: false, advertising: false })
+        break
+      case "save":
+        save({ analytics: analyticsAvailable && analytics.checked, advertising: advertisingAvailable && advertising.checked })
+        break
+    }
+  })
+</script>
+
+<style>
+  label:not([hidden]) {
+    display: flex;
+  }
+</style>
